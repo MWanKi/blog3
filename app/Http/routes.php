@@ -16,3 +16,4 @@
 // });
 
 Route::resource('posts','PostController');
+Route::resource('posts/{post_id}/comments', 'CommentController');

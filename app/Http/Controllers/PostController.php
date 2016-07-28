@@ -48,10 +48,9 @@ class PostController extends Controller
     }
 
 	
-    function show() 
+    function show($id) 
     {
-    	$id = str_replace('/posts/', '', $_SERVER['REQUEST_URI']);
-    	$post = Post::find($id);
+    	$post = Post::where('deleted', false)->find($id);
 
     	return view('post.show', [
     		'post' => $post
@@ -94,7 +93,9 @@ class PostController extends Controller
     function destroy($id, Request $request)
     {
         $post = Post::find($id);
-        $post->delete();
+        // $post->delete();
+        $post->deleted = true;
+        $post->save();
 
         if ($request->xhr) {
             return $id;
@@ -102,4 +103,5 @@ class PostController extends Controller
             return redirect('/posts');
         }
     }
+
 }
