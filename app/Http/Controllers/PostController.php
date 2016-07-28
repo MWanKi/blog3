@@ -91,4 +91,15 @@ class PostController extends Controller
         }
     }
 
+    function destroy($id, Request $request)
+    {
+        $post = Post::find($id);
+        $post->delete();
+
+        if ($request->xhr) {
+            return $id;
+        } else {
+            return redirect('/posts');
+        }
+    }
 }
